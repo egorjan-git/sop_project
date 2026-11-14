@@ -37,8 +37,6 @@ type xlsxCell struct {
 
 type xlsxPosition struct{ row, column int }
 
-// ReadXLSXSnapshots reads workbook cells with their original coordinates and tab IDs.
-// Formula results are taken from the workbook cache.
 func ReadXLSXSnapshots(filePath, workbookID, workbookTitle string) (snapshots []SheetSnapshot, err error) {
 	if strings.TrimSpace(workbookID) == "" || strings.TrimSpace(workbookTitle) == "" {
 		return nil, fmt.Errorf("XLSX workbook ID and title are required")
@@ -331,7 +329,6 @@ func xlsxValue(cellType, raw string) map[string]any {
 	case "e":
 		return map[string]any{"errorValue": map[string]string{"type": "ERROR", "message": raw}}
 	case "n", "":
-		// Preserve the original numeric precision when Excel supplies a JSON number.
 		if _, err := strconv.ParseFloat(raw, 64); err == nil && json.Valid([]byte(raw)) {
 			return map[string]any{"numberValue": json.Number(raw)}
 		}

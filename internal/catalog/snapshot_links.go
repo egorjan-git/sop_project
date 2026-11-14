@@ -48,7 +48,6 @@ type linkCell struct {
 	} `json:"data"`
 }
 
-// SheetLinks lists the distinct HTTP(S) links in each Google or Excel workbook.
 func SheetLinks(snapshots []SheetSnapshot, sources []Resource) ([]Resource, error) {
 	ordered := append([]SheetSnapshot(nil), snapshots...)
 	sort.Slice(ordered, func(i, j int) bool {
@@ -99,7 +98,6 @@ func SheetLinks(snapshots []SheetSnapshot, sources []Resource) ([]Resource, erro
 	return links, nil
 }
 
-// ReviewLinks matches reviewed records with the links still present in the snapshots.
 func ReviewLinks(candidates, reviewed []Resource) ([]Resource, error) {
 	if len(reviewed) == 0 {
 		return nil, fmt.Errorf("review file contains no records")

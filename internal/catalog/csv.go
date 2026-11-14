@@ -9,7 +9,6 @@ import (
 	"unicode/utf8"
 )
 
-// ReadCSV checks the whole file before the caller starts writing to the database.
 func ReadCSV(input io.Reader) ([]Resource, error) {
 	data, err := io.ReadAll(input)
 	if err != nil {
@@ -20,7 +19,6 @@ func ReadCSV(input io.Reader) ([]Resource, error) {
 		return nil, errors.New("CSV must be UTF-8 without NUL characters")
 	}
 	r := csv.NewReader(bytes.NewReader(data))
-	// The header consists of column names, so it identifies the separator.
 	firstLine, _, _ := bytes.Cut(bytes.TrimLeft(data, "\r\n"), []byte{'\n'})
 	if bytes.Count(firstLine, []byte{';'}) > bytes.Count(firstLine, []byte{','}) {
 		r.Comma = ';'

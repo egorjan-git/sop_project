@@ -6,7 +6,6 @@ import (
 	"strings"
 )
 
-// Resource is one validated row from a data source.
 type Resource struct {
 	SourceKey    string
 	Name         string

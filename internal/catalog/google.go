@@ -47,7 +47,6 @@ func (t sheetsKeyTransport) RoundTrip(request *http.Request) (*http.Response, er
 	return t.next.RoundTrip(req)
 }
 
-// ReadGoogleSheet reads a header and rows using a Sheets API key or read-only ADC.
 func ReadGoogleSheet(ctx context.Context, spreadsheetID, a1Range string) ([]Resource, error) {
 	ctx, cancel := context.WithTimeout(ctx, 60*time.Second)
 	defer cancel()

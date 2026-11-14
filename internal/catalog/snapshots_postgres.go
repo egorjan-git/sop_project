@@ -28,8 +28,6 @@ WHERE
      EXCLUDED.column_count, EXCLUDED.hidden, EXCLUDED.cells)
 `
 
-// SaveSheetSnapshots writes all supplied tabs in one transaction. It counts only
-// new or changed snapshots. Tabs absent from the supplied batch are preserved.
 func SaveSheetSnapshots(ctx context.Context, db *sql.DB, snapshots []SheetSnapshot) (int64, error) {
 	if len(snapshots) == 0 {
 		return 0, nil
@@ -66,7 +64,6 @@ func SaveSheetSnapshots(ctx context.Context, db *sql.DB, snapshots []SheetSnapsh
 	return changed, nil
 }
 
-// ListSheetSnapshots returns the saved tabs grouped by spreadsheet and in tab order.
 func ListSheetSnapshots(ctx context.Context, db *sql.DB) ([]SheetSnapshot, error) {
 	rows, err := db.QueryContext(ctx, `
         SELECT spreadsheet_id, sheet_id, spreadsheet_title, sheet_title, sheet_index,

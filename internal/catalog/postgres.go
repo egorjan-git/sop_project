@@ -25,7 +25,6 @@ WHERE
     (EXCLUDED.name, EXCLUDED.url, EXCLUDED.discipline, EXCLUDED.cohort, EXCLUDED.availability, EXCLUDED.questions)
 `
 
-// Save writes the full batch in one transaction and returns the number of inserted or updated rows.
 func Save(ctx context.Context, db *sql.DB, sourceID string, records []Resource) (int64, error) {
 	if len(records) == 0 {
 		return 0, nil
@@ -46,7 +45,6 @@ func Save(ctx context.Context, db *sql.DB, sourceID string, records []Resource) 
 	return changed, nil
 }
 
-// ReplaceReviewedLinks updates the reviewed entries and removes stale candidates from this source.
 func ReplaceReviewedLinks(ctx context.Context, db *sql.DB, sourceID string, records []Resource) (changed, removed int64, err error) {
 	if len(records) == 0 {
 		return 0, 0, fmt.Errorf("cannot replace reviewed links with an empty list")

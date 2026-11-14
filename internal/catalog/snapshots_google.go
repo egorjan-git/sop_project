@@ -46,7 +46,6 @@ type googleSnapshotResponse struct {
 	} `json:"sheets"`
 }
 
-// ReadGoogleSnapshots reads every tab, including hidden tabs, with a Sheets API key or read-only ADC.
 func ReadGoogleSnapshots(ctx context.Context, spreadsheetID string) ([]SheetSnapshot, error) {
 	client, err := newSheetsClient(ctx)
 	if err != nil {
@@ -105,7 +104,6 @@ func readGoogleSnapshotCells(ctx context.Context, client *http.Client, endpoint 
 		end := min(start+rowsPerChunk, sheet.RowCount)
 		cellRange := fmt.Sprintf("%s!A%d:%s%d", quotedTitle, start+1, lastColumn, end)
 		if sheetType == "DATA_SOURCE" {
-			// Sheets only permits requesting a DATA_SOURCE tab as a whole.
 			end = sheet.RowCount
 			cellRange = quotedTitle
 		}

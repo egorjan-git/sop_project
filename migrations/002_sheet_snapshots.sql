@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS sheet_snapshots (
     spreadsheet_title TEXT NOT NULL,
     sheet_title       TEXT NOT NULL,
     sheet_index       INTEGER NOT NULL CHECK (sheet_index >= 0),
-    -- Dimensions of the source grid, including unpopulated cells.
     row_count         INTEGER NOT NULL CHECK (row_count >= 0),
     column_count      INTEGER NOT NULL CHECK (column_count >= 0),
     hidden            BOOLEAN NOT NULL,
