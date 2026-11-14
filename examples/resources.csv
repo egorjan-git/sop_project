@@ -1,0 +1,4 @@
+id,name,url,discipline,cohort,availability
+r-001,Конспекты по базам данных,https://example.org/database-notes,Базы данных,БИВ22,open
+r-002,Задания по алгоритмам,https://example.org/algorithms,Алгоритмы,БИВ23,restricted
+r-003,Лекции по математике,https://example.org/math,Математика,БИВ24,unknown

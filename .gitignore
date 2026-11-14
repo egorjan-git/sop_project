@@ -1,0 +1,11 @@
+/.idea/
+/.DS_Store
+/.env
+/.env.*
+/data/*.csv
+/*.json
+/*.xlsx
+/candidates*.csv
+/resource-catalog*.csv
+/sheets*.csv
+/resource-importer
