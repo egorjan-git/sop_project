@@ -1,0 +1,25 @@
+name: sop-project
+
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: sop_db
+      POSTGRES_USER: sop_app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set the password in database/.env}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-55432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql
+      - ./bootstrap.sql:/docker-entrypoint-initdb.d/001_bootstrap.sql:ro
+      - ./migrations:/database/migrations:ro
+      - ../sop_project/migrations:/sop_project/migrations:ro
+      - ../zulip-collector/migrations:/zulip-collector/migrations:ro
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-U", "sop_app", "-d", "sop_db"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  postgres-data:

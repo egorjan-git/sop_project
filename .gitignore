@@ -30,3 +30,6 @@
 /dist/
 *.test
 *.out
+/exports/
+/data/
+/*-check.json

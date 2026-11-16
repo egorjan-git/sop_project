@@ -39,10 +39,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if database != "sop_db" {
-		log.Fatalf("unexpected database: %s", database)
-	}
-
 	if !schemaReady {
 		log.Fatal("zulip.messages table not found")
 	}

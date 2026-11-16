@@ -1,6 +1,38 @@
-Что уже готово:
-1. Парсер zulip сообщний – пока обрабатывает синтетические сообщения (без zulip api), фильтрует их по целевым группам студентов, сохраняет текст, автора, дату, канал, тему и ссылку в postgreSQL. Реализованы защита от дубликатов, обновление сообщений и сохранение прогресса.
-2. Парсер ведомостей – отдельный сервис, способный импортировать excel/google sheets и сохранять содержимое ведомостей в ту же postgreSQL. Уже есть рабочий импорт и экспорт.
-3. Единая база данных – оба сервиса работают с общей структурой postgreSQL. Подготовлены интеграционные таблицы для сопоставления студентов с аккаунтами zulip и записями ведомостей. 
+# SOP Project
 
-Сейчас работаем над автоматической связью студентов по id, дорабатываем процессы выгрузки и обновления, курсоры и повторный импорт работают, но регулярная синхронизация zulip ещё не реализована
+- [Импорт Google Таблиц и Excel](sop_project/README.md) → `public.sheet_snapshots`.
+- [Сбор сообщений Zulip](zulip-collector/README.md) → `zulip.messages`.
+
+Оба парсера используют один `DATABASE_URL`. Требуется Go 1.26.2+.
+
+## PostgreSQL через Docker Compose
+
+Из корня репозитория:
+
+```sh
+if [ ! -f database/.env ]; then
+  (umask 077; printf 'POSTGRES_PASSWORD=%s\n' "$(openssl rand -hex 24)" > database/.env)
+fi
+docker compose --env-file database/.env -f database/compose.yaml up -d --wait
+set -a
+. database/.env
+set +a
+export DATABASE_URL="postgresql://sop_app:${POSTGRES_PASSWORD}@127.0.0.1:${POSTGRES_PORT:-55432}/sop_db?sslmode=disable"
+```
+
+При первом запуске Compose создаёт схему обоих парсеров. Чтобы изменить порт `55432`, задай `POSTGRES_PORT` в `database/.env`. Для автоматического подключения из GoLand задай `DATABASE_URL` в конфигурациях обоих запусков.
+
+## PostgreSQL на сервере
+
+Передай обоим парсерам один `DATABASE_URL` с TLS. В пустой базе администратор один раз применяет миграции:
+
+```sh
+psql "$DATABASE_URL" -X -v ON_ERROR_STOP=1 -f database/bootstrap.sql
+```
+
+## Проверка
+
+```sh
+go run ./zulip-collector/cmd/dbcheck
+go test ./sop_project/... ./zulip-collector/...
+```

@@ -136,7 +136,7 @@ func (c *Collector) Sync(
 
 		selected := make([]Message, 0)
 		for _, msg := range page.Messages {
-			if authors[msg.AuthorID] {
+			if authors == nil || authors[msg.AuthorID] {
 				selected = append(selected, msg)
 			}
 		}

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"log"
@@ -27,12 +28,26 @@ func main() {
 	)
 	defer stop()
 
-	if err := run(ctx); err != nil {
+	if err := run(ctx); err != nil && !errors.Is(err, flag.ErrHelp) {
 		log.Fatal(err)
 	}
 }
 
 func run(ctx context.Context) error {
+	if len(os.Args) > 1 {
+		switch os.Args[1] {
+		case "channels":
+			return listChannels(ctx, os.Args[2:])
+		case "live":
+			return runLive(ctx, os.Args[2:])
+		case "export":
+			return runExport(ctx, os.Args[2:])
+		}
+	}
+	return runFixture(ctx)
+}
+
+func runFixture(ctx context.Context) error {
 	storageType := flag.String(
 		"storage", "memory", "memory или postgres",
 	)
