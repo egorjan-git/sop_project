@@ -1,0 +1,6 @@
+.env
+exports/
+*.log
+
+./zulip-collector/cmd/dbsync/main.go
+./zulip-collector/cmd/dbcheck/main.go

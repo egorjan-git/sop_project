@@ -1,0 +1,59 @@
+
+[
+    {
+      "id": 10001,
+      "author_id": 101,
+      "author_name": "Иван Петров",
+      "channel_id": 501,
+      "channel_name": "Программирование",
+      "topic": "Домашнее задание №3",
+      "text": "Как реализовать интерфейс в Go?",
+      "url": "https://example.org/messages/10001",
+      "created_at": "2024-10-15T14:35:00Z"
+    },
+    {
+      "id": 10002,
+      "author_id": 103,
+      "author_name": "Мария Соколова",
+      "channel_id": 502,
+      "channel_name": "Математика",
+      "topic": "Контрольная работа",
+      "text": "Когда будет контрольная?",
+      "url": "https://example.org/messages/10002",
+      "created_at": "2024-10-16T09:15:00Z"
+    },
+    {
+      "id": 10003,
+      "author_id": 101,
+      "author_name": "Иван Петров",
+      "channel_id": 502,
+      "channel_name": "Математика",
+      "topic": "Контрольная работа",
+      "text": "Разобрал задачу с интегралами.",
+      "url": "https://example.org/messages/10003",
+      "created_at": "2024-10-16T11:20:00Z"
+    },
+    {
+      "id": 10004,
+      "author_id": 104,
+      "author_name": "Анна Волкова",
+      "channel_id": 999,
+      "channel_name": "Исключённый тестовый канал",
+      "topic": "Обсуждение",
+      "text": "Проверка ограничения источников.",
+      "url": "https://example.org/messages/10004",
+      "created_at": "2024-10-17T10:00:00Z"
+    },
+    {
+      "id": 10005,
+      "author_id": 102,
+      "author_name": "Павел Смирнов",
+      "channel_id": 501,
+      "channel_name": "Программирование",
+      "topic": "Практическая работа",
+      "text": "Отправил решение преподавателю.",
+      "url": "https://example.org/messages/10005",
+      "created_at": "2024-10-18T16:45:00Z"
+    }
+  ]
+  

@@ -1,11 +1,32 @@
-/.idea/
-/.DS_Store
-/.env
-/.env.*
-/data/*.csv
-/*.json
-/*.xlsx
-/candidates*.csv
-/resource-catalog*.csv
-/sheets*.csv
-/resource-importer
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*credentials*.json
+*service-account*.json
+
+# Database backups
+*.dump
+*.backup
+*.sql.gz
+
+# Private datasets
+*.xlsx
+*.xls
+*.csv
+!sop_project/examples/resources.csv
+
+# Local build artifacts
+/bin/
+/dist/
+*.test
+*.out
