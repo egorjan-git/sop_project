@@ -28,4 +28,4 @@ go run ./cmd/collector export -channels 2392,2428 -from 2024-09-01 -to 2026-11-1
 go run ./cmd/collector export -channels 2392,2428 -from 2024-09-01 -to 2026-11-16 -format csv -out exports/biv24.csv
 ```
 
-В выгрузке есть текст, автор, дата, канал, тема и ссылка на оригинал. Для проверки открой `url` в Zulip.
+В выгрузке есть текст, автор, дата, канал, тема и ссылка на оригинал. Для проверки открой `url` в Zulip. Для [учебной истории](../sop_project/README.md#учебная-история-студента) используется числовой ID автора из `zulip.users`.

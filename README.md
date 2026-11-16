@@ -2,6 +2,7 @@
 
 - [Импорт Google Таблиц и Excel](sop_project/README.md) → `public.sheet_snapshots`.
 - [Сбор сообщений Zulip](zulip-collector/README.md) → `zulip.messages`.
+- [Учебная история студента](sop_project/README.md#учебная-история-студента) → сообщения и подтверждённые строки ведомостей.
 
 Оба парсера используют один `DATABASE_URL`. Требуется Go 1.26.2+.
 
@@ -36,3 +37,12 @@ psql "$DATABASE_URL" -X -v ON_ERROR_STOP=1 -f database/bootstrap.sql
 go run ./zulip-collector/cmd/dbcheck
 go test ./sop_project/... ./zulip-collector/...
 ```
+
+Для интеграционных тестов создай отдельную пустую БД `sop_collector_test` и задай `POSTGRES_TEST_URL` для неё. Из корня проекта:
+
+```sh
+psql "$POSTGRES_TEST_URL" -X -v ON_ERROR_STOP=1 -f database/bootstrap.sql
+go test -race ./sop_project/... ./zulip-collector/...
+```
+
+Миграции для этой базы применяются один раз.

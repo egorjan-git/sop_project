@@ -27,6 +27,7 @@ const usage = `Usage:
   go run . import-snapshots -xlsx FILE -id SOURCE_ID [-title TITLE] [-dry-run]
   go run . export-snapshots -format csv|json -out FILE
   go run . catalog-links -sources FILE [-candidates-out FILE | -review FILE -source SOURCE [-dry-run]]
+  go run . student-history -h
 Set DATABASE_URL to connect to PostgreSQL.`
 
 func main() {
@@ -55,6 +56,8 @@ func run(ctx context.Context, args []string) error {
 		err = exportSnapshots(ctx, args[1:])
 	case "catalog-links":
 		err = importCatalogLinks(ctx, args[1:])
+	case "student-history":
+		err = studentHistory(ctx, args[1:])
 	default:
 		return fmt.Errorf("unknown command %q; use -h", args[0])
 	}
