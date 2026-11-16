@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"resource-importer/internal/catalog"
@@ -44,7 +45,11 @@ func importSnapshots(ctx context.Context, args []string) error {
 		if bookID == "" {
 			return errors.New("-xlsx requires a stable -id")
 		}
-		snapshots, err = catalog.ReadXLSXSnapshots(*xlsx, bookID, strings.TrimSpace(*title))
+		bookTitle := strings.TrimSpace(*title)
+		if bookTitle == "" {
+			bookTitle = filepath.Base(*xlsx)
+		}
+		snapshots, err = catalog.ReadXLSXSnapshots(*xlsx, bookID, bookTitle)
 	default:
 		id, idErr := spreadsheetID(*sheet)
 		if idErr != nil {
