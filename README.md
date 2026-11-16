@@ -1,9 +1,36 @@
-# SOP Project
+# Сбор сообщений Zulip
 
-Эта ветка содержит первый этап интеграции. Для запуска и разработки используй [актуальную версию в `main`](https://github.com/egorjan-git/sop_project/tree/main).
+Команды используют сборщик из `main`. Из корня репозитория:
 
-- [Сборщик Zulip](https://github.com/egorjan-git/sop_project/blob/main/zulip-collector/README.md) получает сообщения через Zulip API, сохраняет их в PostgreSQL и выгружает в JSON и CSV. Повторный сбор обновляет записи по ID, а после прерывания можно продолжить с сохранённой позиции.
-- [Импорт ведомостей](https://github.com/egorjan-git/sop_project/blob/main/sop_project/README.md) загружает Excel и Google Таблицы в ту же PostgreSQL.
-- [Учебная история студента](https://github.com/egorjan-git/sop_project/blob/main/sop_project/README.md#учебная-история-студента) объединяет сообщения привязанного аккаунта Zulip и подтверждённые строки ведомостей.
+```sh
+git switch main
+```
 
-Порядок запуска PostgreSQL через Docker Compose и интеграционных тестов описан в [README ветки `main`](https://github.com/egorjan-git/sop_project/blob/main/README.md).
+Выполни [настройку PostgreSQL](https://github.com/egorjan-git/sop_project/blob/main/README.md#postgresql-через-docker-compose) в том же терминале.
+
+## Сбор
+
+В терминале zsh:
+
+```zsh
+cd zulip-collector
+export ZULIP_EMAIL='EMAIL_БОТА'
+read -rs 'ZULIP_API_KEY?Ключ Zulip: '
+echo
+export ZULIP_API_KEY
+
+go run ./cmd/collector channels
+go run ./cmd/collector live -channels 2392,2428 -from 2024-09-01 -to 2026-11-16
+```
+
+Подставь нужные ID каналов и даты. Обе даты включены по московскому времени. После прерывания повтори `live` с тем же ботом, каналами и датами.
+
+## Выгрузка
+
+```sh
+mkdir -p exports
+go run ./cmd/collector export -channels 2392,2428 -from 2024-09-01 -to 2026-11-16 -format json -out exports/biv24.json
+go run ./cmd/collector export -channels 2392,2428 -from 2024-09-01 -to 2026-11-16 -format csv -out exports/biv24.csv
+```
+
+[Общий README проекта](https://github.com/egorjan-git/sop_project/blob/main/README.md).
